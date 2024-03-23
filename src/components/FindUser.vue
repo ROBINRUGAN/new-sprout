@@ -24,7 +24,7 @@ const taskData = ref([
 </script>
 
 <template>
-  <el-col :span="18" class="find">
+  <el-col class="find">
     <el-row>
       <h1>查询用户</h1>
       <div class="wrapper">

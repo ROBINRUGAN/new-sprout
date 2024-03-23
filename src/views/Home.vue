@@ -10,7 +10,7 @@ import Aside from '@/components/Sidebar.vue'
     </el-header>
     <el-container>
       <el-aside width="200px" class="aside">
-        <Aside style="height: 100vh;padding-top: 20px;box-sizing: border-box;"/>
+        <Aside style="height: 100vh;padding-top: 20px;box-sizing: border-box;"></Aside>
       </el-aside>
       <el-main class="main">
         <router-view/>

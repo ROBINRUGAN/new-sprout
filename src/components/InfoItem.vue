@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue'
+import { computed } from 'vue'
 
 // 定义一个接收 color 的 prop
 const props = defineProps({

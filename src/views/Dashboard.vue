@@ -70,14 +70,14 @@ const tableData = ref([
               <el-col :span="8" class="toolWrapper">
                 <router-link to="/home/dashboard/main">
                   <button
-                  class="iconWrapper"
-                  @click="setFocus(1)"
-                  :class="{ 'is-focused': isFocused(1) }"
+                    class="iconWrapper"
+                    @click="setFocus(1)"
+                    :class="{ 'is-focused': isFocused(1) }"
                   >
                     <el-icon><MessageBox /></el-icon>
                   </button>
                 </router-link>
-                
+
                 <p>活动管理</p>
               </el-col>
               <el-col :span="8" class="toolWrapper">
@@ -143,7 +143,10 @@ const tableData = ref([
     </el-col>
   </el-row>
   <el-row :gutter="20">
-    <RouterView />
+    <el-col :span="18">
+      <RouterView />
+    </el-col>
+
     <el-col :span="6"
       ><div class="image">
         <img src="../assets/home/image.png" alt="" /></div
