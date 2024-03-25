@@ -146,7 +146,6 @@ const tableData = ref([
     <el-col :span="18">
       <RouterView />
     </el-col>
-
     <el-col :span="6"
       ><div class="image">
         <img src="../assets/home/image.png" alt="" /></div
@@ -231,3 +230,4 @@ const tableData = ref([
 }
 </style>
 @/stores/toolSelectStore
+@/stores/authStore

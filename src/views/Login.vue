@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import router from '@/router';
-const login = () =>{
-  router.push('/home')
-}
+import { ref } from 'vue'
+import { useAuthStore } from '@/stores/authStore'
+const authStore = useAuthStore();
+const loginData = ref({
+  username: '',
+  password: ''
+})
 </script>
 
 <template>
@@ -22,9 +25,21 @@ const login = () =>{
         <div class="wrapper2">
           <p style="font-size: 28px; margin: 20px 0 10px 20px">新苗同学</p>
           <div class="form">
-            <input type="text" name="username" id="username" placeholder="账号" />
-            <input type="password" name="password" id="password" placeholder="密码" />
-            <button @click="login">登录</button>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              v-model="loginData.username"
+              placeholder="账号"
+            />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              v-model="loginData.password"
+              placeholder="密码"
+            />
+            <button @click="authStore.Login(loginData)">登录</button>
           </div>
         </div>
       </el-col>

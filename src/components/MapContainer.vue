@@ -53,7 +53,7 @@ onUnmounted(() => {
   border-radius: 50px;
   padding: 0px;
   margin: 0px;
-  width: 700px;
+  width: 750px;
   height: 500px;
 }
 </style>

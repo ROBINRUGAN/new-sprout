@@ -1,5 +1,5 @@
 <template>
-  <el-menu router="true" :default-active="activeIndex">
+  <el-menu router :default-active="activeIndex">
     <router-link to="/home/dashboard">
       <el-menu-item index="/home/dashboard">
         <el-icon><Odometer /></el-icon>
