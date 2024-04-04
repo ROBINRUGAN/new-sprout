@@ -1,11 +1,22 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted, onBeforeMount } from 'vue'
 import UploadImg from '@/components/UploadImg.vue'
-import MapContainer from '@/components/MapContainer.vue';
+import MapContainer from '@/components/MapContainer.vue'
+import { getFacultyApi, getMajorApi,CreateFatherApi } from '@/api/api'
+interface Colleges {
+  facultyName: string
+  id: number
+}
+interface Majors {
+  majorName: string
+  id: number
+}
 const mapVisible = ref(false)
+const colleges = ref<Colleges[]>([])
+const majors = ref<Majors[]>([])
 const form = reactive({
-  faorson: 0,
-  parentId: '',
+  faorson: 1,
+  parentId: -1,
   isMain: 0,
   taskName: '',
   taskDescription: '',
@@ -14,6 +25,11 @@ const form = reactive({
   taskPoints: 0,
   taskRewards: '',
   taskRectangle: '',
+  //纬度
+  taskLatitude: '',
+  //经度
+  taskLongitude: '',
+  taskRadius: '',
   taskDifficulty: 0,
   taskPriority: 0,
   requiresGrade: '',
@@ -22,7 +38,7 @@ const form = reactive({
   requiresPhoto: 0,
   requiresAttitude: '',
   requiresItem: '',
-  taskRequiresType: '',
+  taskRequiresType: 0,
   requiresAudit: 0,
   startTime: '',
   endTime: '',
@@ -30,10 +46,42 @@ const form = reactive({
   chan: 0,
   water: 0
 })
-
-const onSubmit = () => {
-  console.log('submit!')
+const getLat = (lat: string) => {
+  form.taskLatitude = lat
 }
+const getLng = (lng: string) => {
+  form.taskLongitude = lng
+}
+const onSubmit = async () => {
+  form.requiresAudit = form.requiresAudit ? 1 : 0
+  form.taskRewards = form.water + ',' + form.chan + ',' + form.tree
+  form.taskRectangle = form.taskLongitude + ',' + form.taskLatitude + ',' + form.taskRadius
+  const res = await CreateFatherApi(form);
+  console.log(res)
+}
+const setURL = (urls: string[]) => {
+  form.taskImages = urls.join('<')
+}
+
+const fetchColleges = async () => {
+  // 调用API获取学院列表
+  const res = await getFacultyApi()
+
+  colleges.value = res.data.data.facultyList
+  console.log(colleges.value)
+}
+
+const fetchMajors = async () => {
+  form.requiresMajor = ''
+  if (form.requiresFaculty) {
+    const res = await getMajorApi(form.requiresFaculty)
+    majors.value = res.data.data.majorList
+    console.log(majors.value)
+  }
+}
+onBeforeMount(() => {
+  fetchColleges()
+})
 </script>
 
 <template>
@@ -48,62 +96,88 @@ const onSubmit = () => {
           <el-col :span="12" style="padding: 0 40px">
             <el-form-item label="活动等级">
               <el-radio-group v-model="form.faorson">
-                <el-radio :value="1" label="父"/>
-                <el-radio :value="0" label="子"/>
+                <el-radio :value="1" label="父" />
+                <el-radio :value="0" label="子" />
               </el-radio-group>
             </el-form-item>
             <el-form-item label="活动属性" v-if="form.faorson === 1">
               <el-radio-group v-model="form.parentId">
-                <el-radio :value="-1" label='含多项子活动'/>
-                <el-radio :value="0" label="单项"/>
+                <el-radio :value="-1" label="含多项子活动" />
+                <el-radio :value="0" label="单项" />
               </el-radio-group>
             </el-form-item>
             <el-form-item label="父组件ID" v-if="form.faorson === 0">
-              <el-input v-model="form.parentId" placeholder="please input activity name" />
+              <el-input v-model="form.parentId" placeholder="请输入..." />
             </el-form-item>
             <el-form-item label="活动类型">
               <el-radio-group v-model="form.isMain">
-                <el-radio :value="1" label="主线任务"/>
-                <el-radio :value="0" label="支线任务"/>
+                <el-radio :value="1" label="主线任务" />
+                <el-radio :value="0" label="支线任务" />
               </el-radio-group>
             </el-form-item>
             <el-form-item label="任务对象年级">
               <el-input v-model="form.requiresGrade" />
             </el-form-item>
             <el-form-item label="任务对象所在学院">
-              <el-select v-model="form.requiresFaculty" placeholder="请选择...">
-                <el-option label="计算机学院" value="1" />
-                <el-option label="外国语学院" value="2" />
-                <el-option label="数学学院" value="3" />
-                <el-option label="物理学院" value="4" />
-                <el-option label="化学学院" value="5" />
-                <el-option label="生物学院" value="6" />
+              <el-select
+                v-model="form.requiresFaculty"
+                placeholder="请选择..."
+                @change="fetchMajors"
+              >
+                <el-option
+                  v-for="college in colleges"
+                  :key="college.id"
+                  :value="college.id"
+                  :label="college.facultyName"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="任务对象专业">
               <el-select v-model="form.requiresMajor" placeholder="请选择...">
-                <el-option label="计算机科学与技术" value="1" />
-                <el-option label="软件工程" value="2" />
-                <el-option label="网络工程" value="3" />
-                <el-option label="信息安全" value="4" />
-                <el-option label="物联网工程" value="5" />
-                <el-option label="数字媒体技术" value="6" />
+                <el-option
+                  v-for="major in majors"
+                  :key="major.id"
+                  :value="major.id"
+                  :label="major.majorName"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="活动名称">
-              <el-input v-model="form.taskName" placeholder="please input activity name" />
+              <el-input v-model="form.taskName" placeholder="请输入..." />
             </el-form-item>
-            <el-form-item label="活动地点">
+            <el-form-item label="活动方式">
+              <el-select v-model="form.taskRequiresType" placeholder="请选择...">
+                <!-- 0-其他 1-答题 2-网页浏览 3-摄像头打卡 4-定位打卡 5-图片打卡 -->
+                <el-option label="其他" :value="0" />
+                <el-option label="答题" :value="1" />
+                <el-option label="浏览网页" :value="2" />
+                <el-option label="摄像头打卡" :value="3" />
+                <el-option label="定位打卡" :value="4" />
+                <el-option label="图片打卡" :value="5" />
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="活动地点"
+              v-if="form.taskRequiresType === 3 || form.taskRequiresType === 4"
+            >
               <el-button plain @click="mapVisible = true">打开地图定位</el-button>
-              <el-dialog v-model="mapVisible" title="请在下面点击选取活动中心点" width="800"> 
-              <MapContainer style="margin: auto;" />
+              <el-dialog v-model="mapVisible" title="请在下面点击选取活动中心点" width="800">
+                <MapContainer style="margin: auto" @getLng="getLng" @getLat="getLat" />
               </el-dialog>
             </el-form-item>
+            <el-form-item
+              label="地点半径(m)"
+              v-if="form.taskRequiresType === 3 || form.taskRequiresType === 4"
+            >
+              <el-input v-model="form.taskRadius" placeholder="请输入..." />
+            </el-form-item>
+
             <el-form-item label="活动时段">
               <el-col :span="11">
                 <el-date-picker
                   v-model="form.startTime"
                   type="datetime"
+                  value-format="YYYY-MM-DD HH:mm:ss"
                   placeholder="Pick a date"
                   style="width: 100%"
                 />
@@ -116,25 +190,19 @@ const onSubmit = () => {
                   v-model="form.endTime"
                   placeholder="Pick a time"
                   style="width: 100%"
+                  value-format="YYYY-MM-DD HH:mm:ss"
                   type="datetime"
                 />
               </el-col>
             </el-form-item>
-            <el-form-item label="活动方式">
-              <el-select v-model="form.taskRequiresType" placeholder="请选择...">
-                <el-option label="答题" value="1" />
-                <el-option label="浏览网页" value="2" />
-                <el-option label="图片提交" value="3" />
-                <el-option label="其它" value="4" />
-              </el-select>
-            </el-form-item>
+
             <el-form-item label="活动描述">
               <el-input v-model="form.taskDescription" type="textarea" :rows="6" />
             </el-form-item>
           </el-col>
           <el-col :span="12" style="padding: 0 40px">
             <el-form-item label="活动封面">
-              <UploadImg></UploadImg>
+              <UploadImg @urls="setURL"></UploadImg>
             </el-form-item>
             <el-form-item label="活动奖励">
               <div
@@ -184,6 +252,13 @@ const onSubmit = () => {
             <el-form-item label="物品识别类型" v-if="form.requiresPhoto === 1">
               <el-select v-model="form.requiresItem">
                 <!-- 身份证 录取通知书 银行卡 证件照 手机 衣物 文具 -->
+                <el-option label="背包" :value="24" />
+                <el-option label="雨伞" :value="25" />
+                <el-option label="杯子" :value="41" />
+                <el-option label="笔记本电脑" :value="63" />
+                <el-option label="书" :value="73" />
+                <el-option label="吹风机" :value="78" />
+                <el-option label="牙刷" :value="79" />
                 <el-option label="身份证" :value="1" />
                 <el-option label="录取通知书" :value="2" />
                 <el-option label="银行卡" :value="3" />

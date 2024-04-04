@@ -17,6 +17,8 @@ export const useAuthStore = defineStore(
       if (res.data.code === '0') {
         ElMessage.success('登录成功！')
         setToken(res.data.data.token)
+        username.value = res.data.data.username
+        id.value = res.data.data.id
         router.push({ path: '/home' })
       } else {
         ElMessage.error(res.data.message)

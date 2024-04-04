@@ -1,6 +1,7 @@
 <script setup>
 import AMapLoader from '@amap/amap-jsapi-loader'
 import { onMounted, onUnmounted, ref } from 'vue'
+const emit = defineEmits(['getLng', 'getLat'])
 let map = null
 const lng = ref(119.19799)
 const lat = ref(26.059948)
@@ -31,6 +32,8 @@ onMounted(() => {
         map.clearMap();
         map.add(marker)
         console.log('您在[ ' + e.lnglat.getLng() + ',' + e.lnglat.getLat() + ' ]的位置点击了地图！')
+        emit('getLng', e.lnglat.getLng().toString())
+        emit('getLat', e.lnglat.getLat().toString())
       }
 
       //绑定事件
