@@ -11,7 +11,7 @@
     :limit="2"
     :auto-upload="true"
   >
-    <el-button type="primary">Click to upload</el-button>
+    <el-button type="primary">点击上传</el-button>
     <template #tip>
       <div class="el-upload__tip">支持上传jpg/png/avi/mov/mp4文件，不超过50M</div>
     </template>

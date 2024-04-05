@@ -41,7 +41,7 @@
     {
       name: 'Area Mode',
       type: 'pie',
-      radius: ['20%', '90%'],
+      radius: ['10%', '70%'],
       roseType: 'area',
       itemStyle: {
         borderRadius: 8

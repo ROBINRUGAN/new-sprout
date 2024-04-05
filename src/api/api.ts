@@ -65,3 +65,10 @@ export const putAdApi = (data: any) => {
     });
 }
 
+export const adDetailApi = (data: any) => {
+    return service.request({
+        method: "post",
+        url: `/api/new-sprout/admin/v1/ad/page`,
+        data,
+    });
+}
