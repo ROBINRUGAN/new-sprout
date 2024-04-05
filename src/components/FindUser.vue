@@ -108,7 +108,7 @@ const taskData = ref([
             <el-table
               :data="treeData"
               stripe
-              show-header="false"
+              :show-header=false
               size="small"
               style="width: 140px; height: 110px; font-size: 12px; margin-top: 10px"
             >
@@ -129,7 +129,7 @@ const taskData = ref([
             <el-table
               :data="opData"
               stripe
-              show-header="false"
+              :show-header=false
               size="small"
               style="width: 240px; height: 110px; font-size: 12px; margin-top: 10px"
             >
@@ -148,7 +148,7 @@ const taskData = ref([
             <el-table
               :data="taskData"
               stripe
-              show-header="false"
+              :show-header=false
               size="small"
               style="width: 510px; height: 140px; font-size: 12px; margin-top: 5px"
             >

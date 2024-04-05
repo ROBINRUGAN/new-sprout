@@ -40,7 +40,7 @@ onMounted(() => {
       map.on('click', clickHandler)
     })
     .catch((e) => {
-      console.log(e)
+      // console.log(e)
     })
 })
 

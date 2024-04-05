@@ -21,17 +21,17 @@
       </el-menu-item>
     </router-link>
 
-    <router-link to="/home/feedback">
-      <el-menu-item index="/home/feedback">
+    <router-link to="/home/createAd">
+      <el-menu-item index="/home/createAd">
         <el-icon><ChatRound /></el-icon>
-        <span>用户反馈</span>
+        <span>发布广告</span>
       </el-menu-item>
     </router-link>
 
-    <router-link to="/home/userCenter">
-      <el-menu-item index="/home/userCenter">
+    <router-link to="/home/pastAd">
+      <el-menu-item index="/home/pastAd">
         <el-icon><setting /></el-icon>
-        <span>个人中心</span>
+        <span>管理广告</span>
       </el-menu-item>
     </router-link>
   </el-menu>

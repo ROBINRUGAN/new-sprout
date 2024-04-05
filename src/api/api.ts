@@ -57,4 +57,11 @@ export const getPastChildApi = (data: any) => {
         data,
     });
 }
+export const putAdApi = (data: any) => {
+    return service.request({
+        method: "post",
+        url: `/api/new-sprout/admin/v1/ad/put`,
+        data,
+    });
+}
 

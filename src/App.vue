@@ -15,4 +15,10 @@ import { RouterView } from 'vue-router'
 a {
   text-decoration: none;
 }
+textarea {
+  resize: none;
+}
+.el-textarea__inner {
+  resize: none !important;
+}
 </style>

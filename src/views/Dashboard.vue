@@ -229,5 +229,3 @@ const tableData = ref([
   border-radius: 4px;
 }
 </style>
-@/stores/toolSelectStore
-@/stores/authStore

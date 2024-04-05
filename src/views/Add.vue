@@ -57,7 +57,7 @@ const onSubmit = async () => {
   form.taskRewards = form.water + ',' + form.chan + ',' + form.tree
   form.taskRectangle = form.taskLongitude + ',' + form.taskLatitude + ',' + form.taskRadius
   const res = await CreateFatherApi(form);
-  console.log(res)
+  // console.log(res)
 }
 const setURL = (urls: string[]) => {
   form.taskImages = urls.join('<')
@@ -68,7 +68,7 @@ const fetchColleges = async () => {
   const res = await getFacultyApi()
 
   colleges.value = res.data.data.facultyList
-  console.log(colleges.value)
+  // console.log(colleges.value)
 }
 
 const fetchMajors = async () => {
@@ -76,7 +76,7 @@ const fetchMajors = async () => {
   if (form.requiresFaculty) {
     const res = await getMajorApi(form.requiresFaculty)
     majors.value = res.data.data.majorList
-    console.log(majors.value)
+    // console.log(majors.value)
   }
 }
 onBeforeMount(() => {
@@ -85,7 +85,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <el-row :gutter="0" class="wrapper">
+  <div :gutter="0" class="wrapper">
     <div class="left">
       <h1 style="font-size: 24px; margin-top: 15px; margin-left: 15px; margin-bottom: 15px">
         活动信息录入
@@ -319,14 +319,14 @@ onBeforeMount(() => {
         </el-row>
       </el-form>
     </div>
-  </el-row>
+  </div>
 </template>
 
 <style scoped>
 .wrapper {
-  background-color: rgb(0, 255, 255);
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 .left {
   background-color: #fff;

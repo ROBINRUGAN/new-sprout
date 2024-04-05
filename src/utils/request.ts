@@ -16,7 +16,7 @@ service.interceptors.request.use(
     if (authString) {
       const auth = JSON.parse(authString)
       token = auth.token
-      console.log(token)
+      // console.log(token)
     }
     if (token) {
       config.headers.token = token

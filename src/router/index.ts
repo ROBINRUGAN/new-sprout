@@ -29,7 +29,10 @@ const router = createRouter({
               path: 'find',
               component: () => import('../components/FindUser.vue')
             },
-            
+            {
+              path: 'ad',
+              component: () => import('../components/Ad.vue')
+            },
           ]
         },
         {
@@ -37,16 +40,16 @@ const router = createRouter({
           component: () => import('../views/Add.vue')
         },
         {
-          path: 'feedback',
-          component: () => import('../views/Feedback.vue')
+          path: 'createAd',
+          component: () => import('../views/CreateAd.vue')
         },
         {
           path: 'past',
           component: () => import('../views/Past.vue')
         },
         {
-          path: 'userCenter',
-          component: () => import('../views/UserCenter.vue')
+          path: 'pastAd',
+          component: () => import('../views/PastAd.vue')
         }
       ],
       redirect:'home/dashboard'
