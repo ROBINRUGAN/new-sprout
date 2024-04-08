@@ -3,14 +3,18 @@ import { ref } from 'vue'
 import { LoginApi } from '@/api/api'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
-export const useAuthStore = defineStore(
-  'auth',
-  () => {
+export const useAuthStore = defineStore('auth',() => {
     const token = ref('')
     const username = ref('')
     const id = ref('')
     const setToken = (data: string) => {
       token.value = data
+    }
+    const Logout = () => {
+      token.value = ''
+      username.value = ''
+      id.value = ''
+      router.push({ path: '/login' })
     }
     const Login = async (loginData: any) => {
       const res = await LoginApi(loginData)
@@ -24,7 +28,7 @@ export const useAuthStore = defineStore(
         ElMessage.error(res.data.message)
       }
     }
-    return { token, username, id, setToken, Login }
+    return { token, username, id, setToken, Login, Logout }
   },
   {
     // 启用持久化

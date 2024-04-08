@@ -29,26 +29,22 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Plus } from '@element-plus/icons-vue'
 
 import type { UploadProps, UploadUserFile } from 'element-plus'
-import axios from 'axios'
 const emit = defineEmits(['urls'])
 import { GetURLApi } from '@/api/api'
 const fileList = ref<UploadUserFile[]>([])
 const urlList = ref<string[]>([])
 import { ElMessage } from 'element-plus'
-
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 const dialogFileType = ref('')
 const isVideo = (fileType: string) => {
   // 视频文件的MIME类型通常以"video/"开头
-  return fileType.startsWith('video/');
-};
+  return fileType.startsWith('video/')
+}
 
-
-const beforeUpload = (file: { type: string; size: number; }) => {
+const beforeUpload = (file: { type: string; size: number }) => {
   const allowedTypes = [
     'video/mp4',
     'video/quicktime',
@@ -76,7 +72,7 @@ const uploadImage: UploadProps['httpRequest'] = async ({ file }) => {
   return res.data
 }
 
-const handleRemove: UploadProps['onRemove'] = (uploadFile: any, uploadFiles) => {
+const handleRemove: UploadProps['onRemove'] = (uploadFile: any) => {
   if (uploadFile.response) {
     const index = urlList.value.indexOf(uploadFile.response.data.fileUrl)
     if (index > -1) {
@@ -84,13 +80,13 @@ const handleRemove: UploadProps['onRemove'] = (uploadFile: any, uploadFiles) => 
     }
   }
 }
-const handleSuccess: UploadProps['onSuccess'] = (res, file, fileList) => {
+const handleSuccess: UploadProps['onSuccess'] = (res) => {
   // console.log('成功了')
   if (res.code === '0') {
     urlList.value.push(res.data.fileUrl)
   }
 }
-const handleChange: UploadProps['onChange'] = (uploadFiles) => {
+const handleChange: UploadProps['onChange'] = () => {
   emit('urls', urlList.value)
 }
 

@@ -50,9 +50,8 @@ const activeIndex = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.el-menu{
-    border: 0;
-    --el-menu-item-height: 50px;
+.el-menu {
+  border: 0;
+  --el-menu-item-height: 50px;
 }
-
 </style>

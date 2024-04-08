@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { reactive, ref, onMounted, onBeforeMount } from 'vue'
+import { reactive, ref, onBeforeMount } from 'vue'
 import UploadImg from '@/components/UploadImg.vue'
 import MapContainer from '@/components/MapContainer.vue'
-import { getFacultyApi, getMajorApi,CreateFatherApi } from '@/api/api'
+import { ElMessage } from 'element-plus'
+import { getFacultyApi, getMajorApi, CreateFatherApi } from '@/api/api'
 interface Colleges {
   facultyName: string
   id: number
@@ -56,8 +57,12 @@ const onSubmit = async () => {
   form.requiresAudit = form.requiresAudit ? 1 : 0
   form.taskRewards = form.water + ',' + form.chan + ',' + form.tree
   form.taskRectangle = form.taskLongitude + ',' + form.taskLatitude + ',' + form.taskRadius
-  const res = await CreateFatherApi(form);
-  // console.log(res)
+  const res = await CreateFatherApi(form)
+  if (res.data.code == '0') {
+    ElMessage.success('发布成功')
+  } else {
+    ElMessage.error(res.data.message)
+  }
 }
 const setURL = (urls: string[]) => {
   form.taskImages = urls.join('<')

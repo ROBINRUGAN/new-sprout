@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, reactive, computed, onMounted } from 'vue'
-import UploadFile from '@/components/UploadFile.vue' // 确保路径正确
-import { getFacultyApi, adDetailApi } from '@/api/api' // 确保API路径正确
+import { ref, reactive, onMounted } from 'vue'
+import { adDetailApi } from '@/api/api' // 确保API路径正确
+import { ElMessage } from 'element-plus'
+
 const isShow = ref(false)
 const searchForm = reactive({
   current: 1,
@@ -47,21 +48,23 @@ interface brief {
   keywordsCount: 1
 }
 const items = ref<brief[]>([])
-const colleges = ref([])
-const majors = ref([])
 
 const getDetail = (id: number) => {
   isShow.value = true
-  console.log(items.value[id])
+  // console.log(items.value[id])
   form.value = items.value[id]
 }
 
 const fetchAdList = async () => {
   // console.log(searchForm)
-  isShow.value = false
   const res = await adDetailApi(searchForm)
-  console.log(res.data.data.records)
-  items.value = res.data.data.records
+  if (res.data.code == '0') {
+    ElMessage.success('查询成功')
+    isShow.value = false
+    items.value = res.data.data.records
+  } else {
+    ElMessage.error(res.data.message)
+  }
 }
 </script>
 <template>
@@ -123,7 +126,14 @@ const fetchAdList = async () => {
       </div>
     </div>
 
-    <el-form ref="adForm" :model="form" label-width="120px" disabled v-if="isShow" style="margin-top: 20px;">
+    <el-form
+      ref="adForm"
+      :model="form"
+      label-width="120px"
+      disabled
+      v-if="isShow"
+      style="margin-top: 20px"
+    >
       <el-row>
         <el-col :span="12">
           <!-- 广告类型 -->
@@ -144,7 +154,7 @@ const fetchAdList = async () => {
 
           <!-- 图片/视频内容 -->
           <el-form-item label="图片/视频内容">
-            <el-image style="width: 100px; height: 100px" :src="form.imgContent" fit="cover" />
+            <el-image style="height: 100px" :src="form.imgContent" fit="cover" />
           </el-form-item>
 
           <!-- 跳转链接 -->
@@ -241,7 +251,7 @@ const fetchAdList = async () => {
 
 .card {
   display: inline-block;
-  width: 300px; /* 这里的宽度可以根据您的设计来调整 */
+  width: 550px; /* 这里的宽度可以根据您的设计来调整 */
   margin-right: 16px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -250,7 +260,9 @@ const fetchAdList = async () => {
 }
 
 .card-image {
-  width: 100%;
+  width: 550px;
+  height: 300px;
+  object-fit: cover;
   display: block;
 }
 

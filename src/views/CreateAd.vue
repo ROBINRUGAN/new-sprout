@@ -127,8 +127,8 @@
 <script setup>
 import { ref, onBeforeMount, reactive, computed } from 'vue'
 import UploadFile from '@/components/UploadFile.vue' // 确保路径正确
-import { getFacultyApi, getMajorApi, putAdApi } from '@/api/api' // 确保API路径正确
-
+import { getFacultyApi, putAdApi } from '@/api/api' // 确保API路径正确
+import { ElMessage } from 'element-plus'
 const form = reactive({
   adType: null,
   wordsContent: '',
@@ -158,13 +158,17 @@ const keywordCount = computed(() => {
 const submitForm = async () => {
   // 提交表单
   form.keywordsCount = keywordCount.value
-  console.log(form)
+  // console.log(form)
   const res = await putAdApi(form)
   console.log(res.data)
+  if (res.data.code == '0') {
+    ElMessage.success('发布成功')
+  } else {
+    ElMessage.error(res.data.message)
+  }
 }
 
 const colleges = ref([])
-const majors = ref([])
 
 const setURL = (urls) => {
   form.imgContent = urls.join('<')
@@ -179,7 +183,6 @@ const fetchColleges = async () => {
 onBeforeMount(() => {
   fetchColleges()
 })
-
 </script>
 <style scoped>
 .wrapper {

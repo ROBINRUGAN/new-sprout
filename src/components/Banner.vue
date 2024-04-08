@@ -26,9 +26,9 @@
           <template v-slot:dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>个人中心</el-dropdown-item>
-              <router-link to="/login">
-                <el-dropdown-item>登出</el-dropdown-item>
-              </router-link>
+              
+                <el-dropdown-item @click="authStore.Logout">登出</el-dropdown-item>
+              
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -48,8 +48,10 @@ import {
 } from 'element-plus'
 import { ref } from 'vue'
 import logo from '@/assets/login/logo.png'
+import { useAuthStore } from '@/stores/authStore';
 const searchInfo = ref('')
 const avatarUrl = ref(logo)
+const authStore = useAuthStore()
 </script>
 
 <style scoped>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 // 创建axios实例
 export const service = axios.create({
@@ -28,7 +29,13 @@ service.interceptors.request.use(
 
 // 添加响应拦截器
 service.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if(response.data.code === "A000100") {
+      alert('登录失效，请重新登录')
+      window.location.href = '/login'
+    }
+    return response
+  },
   (error) => Promise.reject(error)
 )
 
