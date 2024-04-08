@@ -19,12 +19,31 @@ export const GetURLApi = (data:any) => {
     });
 }
 
+export const AddStuApi = (data:any) => {
+    return service.request({
+        method: "post",
+        url: `/api/new-sprout/admin/v1/user/create/batch`,
+        data,
+        headers:{
+            "Content-Type": "multipart/form-data",
+        }
+    });
+}
+
 export const CreateFatherApi = (data:any) => {
     return service.request({
         method: "post",
         url: `/api/new-sprout/admin/v1/task/create-parent`,
         data,
         
+    });
+}
+
+export const CreateSonApi = (data:any) => {
+    return service.request({
+        method: "post",
+        url: `/api/new-sprout/admin/v1/task/create`,
+        data, 
     });
 }
 

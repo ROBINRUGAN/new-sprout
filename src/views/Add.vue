@@ -3,7 +3,7 @@ import { reactive, ref, onBeforeMount } from 'vue'
 import UploadImg from '@/components/UploadImg.vue'
 import MapContainer from '@/components/MapContainer.vue'
 import { ElMessage } from 'element-plus'
-import { getFacultyApi, getMajorApi, CreateFatherApi } from '@/api/api'
+import { getFacultyApi, getMajorApi, CreateFatherApi, CreateSonApi } from '@/api/api'
 interface Colleges {
   facultyName: string
   id: number
@@ -25,7 +25,7 @@ const form = reactive({
   taskImages: '',
   taskPoints: 0,
   taskRewards: '',
-  taskRectangle: '',
+  taskRectangle: "-1",
   //纬度
   taskLatitude: '',
   //经度
@@ -56,8 +56,20 @@ const getLng = (lng: string) => {
 const onSubmit = async () => {
   form.requiresAudit = form.requiresAudit ? 1 : 0
   form.taskRewards = form.water + ',' + form.chan + ',' + form.tree
-  form.taskRectangle = form.taskLongitude + ',' + form.taskLatitude + ',' + form.taskRadius
-  const res = await CreateFatherApi(form)
+  if(form.taskRequiresType === 3 || form.taskRequiresType === 4)
+  {
+    if(form.taskLatitude === '' || form.taskLongitude === '' || form.taskRadius === '')
+    {
+      ElMessage.error('请填写完整的地点信息')
+      return
+    }
+    form.taskRectangle = form.taskLongitude + ',' + form.taskLatitude + ',' + form.taskRadius
+  }
+
+  console.log('上传信息'+form)
+  let res = null
+  if (form.faorson == 1) res = await CreateFatherApi(form)
+  else if (form.faorson == 0) res = await CreateSonApi(form)
   if (res.data.code == '0') {
     ElMessage.success('发布成功')
   } else {
@@ -111,7 +123,7 @@ onBeforeMount(() => {
                 <el-radio :value="0" label="单项" />
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="父组件ID" v-if="form.faorson === 0">
+            <el-form-item label="父活动ID" v-if="form.faorson === 0">
               <el-input v-model="form.parentId" placeholder="请输入..." />
             </el-form-item>
             <el-form-item label="活动类型">

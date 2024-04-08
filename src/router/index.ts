@@ -50,6 +50,14 @@ const router = createRouter({
         {
           path: 'pastAd',
           component: () => import('../views/PastAd.vue')
+        },
+        {
+          path: 'addstuds',
+          component: () => import('../views/AddStudent.vue')
+        },
+        {
+          path: 'checkActivity',
+          component: () => import('../views/CheckActivity.vue')
         }
       ],
       redirect:'home/dashboard'

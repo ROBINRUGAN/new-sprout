@@ -7,10 +7,24 @@
       </el-menu-item>
     </router-link>
 
+    <router-link to="/home/addStuds">
+      <el-menu-item index="/home/addStuds">
+        <el-icon><BottomRight /></el-icon>   
+          <span>学生导入</span>
+      </el-menu-item>
+    </router-link>
+
     <router-link to="/home/add">
       <el-menu-item index="/home/add">
         <el-icon><DocumentAdd /></el-icon>
         <span>发布任务</span>
+      </el-menu-item>
+    </router-link>
+
+    <router-link to="/home/checkActivity">
+      <el-menu-item index="/home/checkActivity">
+        <el-icon><CircleCheck /></el-icon>
+        <span>活动审核</span>
       </el-menu-item>
     </router-link>
 

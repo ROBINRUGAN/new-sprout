@@ -14,7 +14,7 @@ const searchForm = reactive({
 const showSon = ref(false)
 const showDetail = ref(false)
 interface brief {
-  id: ""
+  id: ''
   faorson: 1
   parentId: -1
   isMain: 0
@@ -49,7 +49,7 @@ interface brief {
 const items = ref<brief[]>([])
 const detailItems = ref<brief[]>([])
 const form = ref({
-  id: "",
+  id: '',
   faorson: 1,
   parentId: -1,
   isMain: 0,
@@ -97,16 +97,28 @@ const search = () => {
 onMounted(() => {
   search()
 })
-const getDetail = (data: number) => {
+const getDetail = (data: any, index: number) => {
   getPastChildApi({
-    id: data,
+    id: data.id,
     querySubTask: 1
   }).then((res) => {
-    // console.log(res.data.data)
+    console.log(data)
     if (res.data.code == '0') {
       ElMessage.success('查询成功')
       detailItems.value = res.data.data.subTaskList
       showSon.value = true
+      if (data.parentId == '0') {
+        showDetail.value = true
+        form.value = data
+        if (form.value.requiresAudit === 1) {
+          form.value.requiresAudit = true
+        } else {
+          form.value.requiresAudit = false
+        }
+        form.value.water = parseInt(form.value.taskRewards.split(',')[0])
+        form.value.chan = parseInt(form.value.taskRewards.split(',')[1])
+        form.value.tree = parseInt(form.value.taskRewards.split(',')[2])
+      }
     } else {
       ElMessage.error(res.data.message)
     }
@@ -116,7 +128,11 @@ const getDetail = (data: number) => {
 const getDetailInfo = (id: number) => {
   showDetail.value = true
   form.value = detailItems.value[id]
-  form.value.faorson = 1
+  if (form.value.requiresAudit === 1) {
+    form.value.requiresAudit = true
+  } else {
+    form.value.requiresAudit = false
+  }
   form.value.water = parseInt(items.value[id].taskRewards.split(',')[0])
   form.value.chan = parseInt(items.value[id].taskRewards.split(',')[1])
   form.value.tree = parseInt(items.value[id].taskRewards.split(',')[2])
@@ -154,13 +170,12 @@ const getDetailInfo = (id: number) => {
     </el-form>
     <el-divider />
     <div class="scroll-container">
-      <div class="card" v-for="(item, index) in items" :key="index" @click="getDetail(item.id)">
+      <div class="card" v-for="(item, index) in items" :key="index" @click="getDetail(item, index)">
         <img :src="item.taskImages" alt="" class="card-image" />
         <div class="card-content">
-          <div class="card-id">{{"活动id: "+ item.id }}</div>
+          <div class="card-id">{{ '活动id: ' + item.id }}</div>
           <div class="card-title">{{ item.taskName }}</div>
           <div class="card-description">{{ item.taskDescription }}</div>
-          
         </div>
       </div>
     </div>
@@ -183,19 +198,7 @@ const getDetailInfo = (id: number) => {
     <el-form :model="form" label-width="auto" disabled v-if="showDetail" style="margin-top: 20px">
       <el-row :gutter="0">
         <el-col :span="12" style="padding: 0 40px">
-          <el-form-item label="活动等级">
-            <el-radio-group v-model="form.faorson">
-              <el-radio :value="1" label="父" />
-              <el-radio :value="0" label="子" />
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="活动属性" v-if="form.faorson === 1">
-            <el-radio-group v-model="form.parentId">
-              <el-radio :value="-1" label="含多项子活动" />
-              <el-radio :value="0" label="单项" />
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="父组件ID" v-if="form.faorson === 0">
+          <el-form-item label="父活动ID" v-if="form.faorson === 0">
             <el-input v-model="form.parentId" placeholder="请输入..." />
           </el-form-item>
           <el-form-item label="活动类型">
@@ -264,7 +267,7 @@ const getDetailInfo = (id: number) => {
         </el-col>
         <el-col :span="12" style="padding: 0 40px">
           <el-form-item label="活动封面">
-            <el-image style="width: 100px; height: 100px" :src="form.taskImages" fit="cover" />
+            <el-image style=" height: 100px" :src="form.taskImages" fit="cover" />
           </el-form-item>
           <el-form-item label="活动奖励">
             <div
