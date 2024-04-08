@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import {ElMessage} from 'element-plus'
 const treeData = ref([
   { item: '水滴', amount: 10 },
   { item: '铲子', amount: 10 },
@@ -21,6 +22,12 @@ const taskData = ref([
     { name: '领取新生物品', id: '327389', status: '已完成' },
     { name: '学分认定规则检测', id: '327389', status: '已完成' }
 ])
+const mewch = ref(false)
+
+const showMewch = () => {
+  mewch.value = true
+  ElMessage.success('查询成功')
+}
 </script>
 
 <template>
@@ -40,10 +47,11 @@ const taskData = ref([
           <p>专业</p>
           <input type="text" placeholder="请输入" />
         </div>
-        <button class="search">查询</button>
+        <button class="search" @click="showMewch">查询</button>
       </div>
     </el-row>
-    <el-row>
+    <el-empty description="description" v-if="!mewch"/>
+    <el-row  v-if="mewch">
       <el-col :span="8" class="infos">
         <p>真实姓名：翁鹏</p>
         <p>用户名：FZU7987208859</p>
@@ -60,7 +68,7 @@ const taskData = ref([
         <p>是否为VIP：否</p>
       </el-col>
       <el-col :span="16">
-        <el-row class="twoimgs">
+        <!-- <el-row class="twoimgs">
           <el-col
             :span="12"
             style="
@@ -70,12 +78,7 @@ const taskData = ref([
               justify-content: center;
             "
           >
-            <h1>身份证人像面</h1>
-            <el-image
-              style="margin-top: 10px; width: 213px; height: 120px"
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-              fit="fill"
-            />
+         
           </el-col>
           <el-col
             :span="12"
@@ -86,14 +89,9 @@ const taskData = ref([
               justify-content: center;
             "
           >
-            <h1>录取通知书</h1>
-            <el-image
-              style="margin-top: 10px; width: 213px; height: 120px"
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-              fit="fill"
-            />
+      
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row class="twodetail">
           <el-col
             :span="12"

@@ -38,7 +38,7 @@ const tableData = ref([
           <div>
             <p>总活动</p>
             <div style="display: flex; align-items: center; justify-content: center">
-              <p style="font-size: 24px; font-weight: bold; padding-top: 5px">999+</p>
+              <p style="font-size: 24px; font-weight: bold; padding-top: 5px">12&nbsp;</p>
               <p>个</p>
             </div>
           </div>

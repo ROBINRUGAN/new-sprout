@@ -18,6 +18,7 @@ interface brief {
   faorson: 1
   parentId: -1
   isMain: 0
+  Audit: false
   taskName: ''
   taskDescription: ''
   taskType: ''
@@ -54,6 +55,7 @@ const form = ref({
   parentId: -1,
   isMain: 0,
   taskName: '',
+  Audit: false,
   taskDescription: '',
   taskType: '',
   taskImages: '',
@@ -111,9 +113,9 @@ const getDetail = (data: any, index: number) => {
         showDetail.value = true
         form.value = data
         if (form.value.requiresAudit === 1) {
-          form.value.requiresAudit = true
+          form.value.Audit = true
         } else {
-          form.value.requiresAudit = false
+          form.value.Audit = false
         }
         form.value.water = parseInt(form.value.taskRewards.split(',')[0])
         form.value.chan = parseInt(form.value.taskRewards.split(',')[1])
@@ -129,9 +131,9 @@ const getDetailInfo = (id: number) => {
   showDetail.value = true
   form.value = detailItems.value[id]
   if (form.value.requiresAudit === 1) {
-    form.value.requiresAudit = true
+    form.value.Audit = true
   } else {
-    form.value.requiresAudit = false
+    form.value.Audit = false
   }
   form.value.water = parseInt(items.value[id].taskRewards.split(',')[0])
   form.value.chan = parseInt(items.value[id].taskRewards.split(',')[1])
@@ -189,6 +191,7 @@ const getDetailInfo = (id: number) => {
       >
         <img :src="item.taskImages" alt="" class="card-image" />
         <div class="card-content">
+          <div class="card-id">{{ '活动id: ' + item.id }}</div>
           <div class="card-title">{{ item.taskName }}</div>
           <div class="card-description">{{ item.taskDescription }}</div>
         </div>
@@ -348,7 +351,7 @@ const getDetailInfo = (id: number) => {
             </el-select>
           </el-form-item>
           <el-form-item label="是否人工审核">
-            <el-switch v-model="form.requiresAudit" active-text="是" inactive-text="否" />
+            <el-switch v-model="form.Audit" active-text="是" inactive-text="否" />
           </el-form-item>
           <el-form-item label="优先级">
             <el-slider

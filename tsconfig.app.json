@@ -4,6 +4,9 @@
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
+    "allowJs": true,
+    "strictNullChecks": false, // 关闭严格空值检查
+    "strict": false, // 关闭所有严格类型检查
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
     "baseUrl": ".",

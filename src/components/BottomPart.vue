@@ -13,29 +13,32 @@ const tableData = ref([
 <template>
   <el-row :gutter="20">
     <el-col :span="12"
-      ><div class="hot">
-        <h1>热门活动</h1>
-        <br />
-        <el-table
-          :data="tableData"
-          style="width: 100%"
-          :header-cell-style="{ backgroundColor: '#f5f5f5', color: '#000' }"
-        >
-          <el-table-column prop="rank" label="排名" width="60"></el-table-column>
-          <el-table-column prop="activityName" label="活动名称"></el-table-column>
-          <el-table-column prop="completionVolume" label="完成量"></el-table-column>
-          <el-table-column label="日涨幅">
-            <template #default="scope">
-              <div>
-                {{ scope.row.dailyIncrease }}
-                <el-icon :style="{ color: 'red' }">
-                  <CaretTop />
-                </el-icon>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table></div
-    ></el-col>
+      >
+      <div class="hot">
+        <!-- <Locations/> -->
+          <h1>热门活动</h1>
+          <br />
+          <el-table
+            :data="tableData"
+            style="width: 100%"
+            :header-cell-style="{ backgroundColor: '#f5f5f5', color: '#000' }"
+          >
+            <el-table-column prop="rank" label="排名" width="60"></el-table-column>
+            <el-table-column prop="activityName" label="活动名称"></el-table-column>
+            <el-table-column prop="completionVolume" label="完成量"></el-table-column>
+            <el-table-column label="日涨幅">
+              <template #default="scope">
+                <div>
+                  {{ scope.row.dailyIncrease }}
+                  <el-icon :style="{ color: 'red' }">
+                    <CaretTop />
+                  </el-icon>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+  </el-col>
     <el-col :span="12"
       ><div class="summary">
         <h1>学生分类统计</h1>

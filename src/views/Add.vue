@@ -25,7 +25,7 @@ const form = reactive({
   taskImages: '',
   taskPoints: 0,
   taskRewards: '',
-  taskRectangle: "-1",
+  taskRectangle: '-1',
   //纬度
   taskLatitude: '',
   //经度
@@ -56,24 +56,24 @@ const getLng = (lng: string) => {
 const onSubmit = async () => {
   form.requiresAudit = form.requiresAudit ? 1 : 0
   form.taskRewards = form.water + ',' + form.chan + ',' + form.tree
-  if(form.taskRequiresType === 3 || form.taskRequiresType === 4)
-  {
-    if(form.taskLatitude === '' || form.taskLongitude === '' || form.taskRadius === '')
-    {
+  if (form.taskRequiresType === 3 || form.taskRequiresType === 4) {
+    if (form.taskLatitude === '' || form.taskLongitude === '' || form.taskRadius === '') {
       ElMessage.error('请填写完整的地点信息')
       return
     }
     form.taskRectangle = form.taskLongitude + ',' + form.taskLatitude + ',' + form.taskRadius
   }
 
-  console.log('上传信息'+form)
+  console.log('上传信息' + form)
   let res = null
   if (form.faorson == 1) res = await CreateFatherApi(form)
   else if (form.faorson == 0) res = await CreateSonApi(form)
-  if (res.data.code == '0') {
-    ElMessage.success('发布成功')
-  } else {
-    ElMessage.error(res.data.message)
+  if (res) {
+    if (res.data.code == '0') {
+      ElMessage.success('发布成功')
+    } else {
+      ElMessage.error(res.data.message)
+    }
   }
 }
 const setURL = (urls: string[]) => {

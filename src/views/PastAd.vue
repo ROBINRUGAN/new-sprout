@@ -120,6 +120,7 @@ const fetchAdList = async () => {
     <div class="scroll-container">
       <div class="card" v-for="(item, index) in items" :key="index" @click="getDetail(index)">
         <img :src="item.imgContent" alt="" class="card-image" />
+        <div class="card-id">{{ '广告id: ' + item.id }}</div>
         <div class="card-content">
           <div class="card-title">{{ item.wordsContent }}</div>
         </div>
@@ -273,6 +274,17 @@ const fetchAdList = async () => {
 .card-title {
   font-size: 1.2em;
   margin-bottom: 8px;
+}
+
+.card-id {
+  justify-content: right;
+  font-size: 0.5em;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 0;
+  color: #666;
+  display: flex;
 }
 
 .card-description {

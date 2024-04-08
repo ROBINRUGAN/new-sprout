@@ -91,3 +91,19 @@ export const adDetailApi = (data: any) => {
         data,
     });
 }
+
+export const getTaskSubmitApi = (data: any) => {
+    return service.request({
+        method: "post",
+        url: `/api/new-sprout/admin/v1/task-submit/page-submit`,
+        data,
+    });
+}
+
+export const submitAuditApi = (data: any) => {
+    return service.request({
+        method: "post",
+        url: `/api/new-sprout/admin/v1/task-submit/audit`,
+        data,
+    });
+}
