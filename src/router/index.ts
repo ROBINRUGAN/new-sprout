@@ -28,6 +28,15 @@ const router = createRouter({
             {
               path: 'find',
               component: () => import('../components/FindUser.vue')
+            },
+            {
+              path: 'ad',
+              component: () => import('../components/Ad.vue')
+            }
+            ,
+            {
+              path: 'where',
+              component: () => import('../components/Where.vue')
             }
           ]
         },

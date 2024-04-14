@@ -33,7 +33,7 @@ const showMewch = () => {
 <template>
   <el-col class="find">
     <el-row>
-      <h1>查询用户</h1>
+      <h1 style="margin-left: 10px;">查询用户</h1>
       <div class="wrapper">
         <div class="inputWrapper">
           <p>学号</p>
@@ -175,10 +175,12 @@ const showMewch = () => {
   background-color: #fff;
 }
 .find {
+  
   height: 400px;
   overflow: scroll;
   background-color: rgb(255, 255, 255);
   padding: 20px;
+  padding-left: 30px;
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }

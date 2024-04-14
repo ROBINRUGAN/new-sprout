@@ -99,7 +99,7 @@ const option = {
   ],
   series: [
     {
-      name: '总用户量',
+      name: '总日活量',
       type: 'line',
       smooth: true, // 添加这个属性来使线条平滑
       symbol: 'circle', // 默认不显示数据点

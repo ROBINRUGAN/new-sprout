@@ -194,6 +194,12 @@ const getDetailInfo = async (data: any) => {
   if (res.data.code === '0') {
     taskItems.value = res.data.data.records
     showDetail.value = true
+    taskItems.value.forEach(item => {
+      if(item.auditsSuggestion == null) {
+        item.auditsSuggestion = '尚未填写'
+      }
+      
+    });
     console.log(taskItems.value)
     ElMessage.success('查询成功')
   } else {
@@ -205,6 +211,7 @@ const getTaskInfo = (id: number, item: any) => {
   taskInfo.value = taskItems.value[id]
   showTask.value = true
   auditForm.ids[0] = item.id
+
 }
 </script>
 
@@ -246,7 +253,7 @@ const getTaskInfo = (id: number, item: any) => {
         <div class="card-content">
           <div class="card-id">{{ '活动id: ' + item.id }}</div>
           <div class="card-title">{{ item.taskName }}</div>
-          <div class="card-description">{{ item.taskDescription }}</div>
+          <div class="card-description">{{ item.taskDescription.split('\n')[0] }}</div>
         </div>
       </div>
     </div>
@@ -262,7 +269,7 @@ const getTaskInfo = (id: number, item: any) => {
         <div class="card-content">
           <div class="card-id">{{ '活动id: ' + item.id }}</div>
           <div class="card-title">{{ item.taskName }}</div>
-          <div class="card-description">{{ item.taskDescription }}</div>
+          <div class="card-description">{{ item.taskDescription.split('\n')[0] }}</div>
         </div>
       </div>
     </div>

@@ -1,18 +1,29 @@
 <template>
-    <div ref="chartContainer" style="width: 100%; height: 340px"></div>
-  </template>
-  
-  <script setup>
-  import { onMounted, ref } from 'vue'
-  import * as echarts from 'echarts'
-  
-  const chartContainer = ref(null)
-  let myChart = null
-  
-  // 图表配置
-  const option = {
+  <div ref="chartContainer" style="width: 100%; height: 340px"></div>
+</template>
+
+<script setup>
+import { onMounted, ref } from 'vue'
+import * as echarts from 'echarts'
+
+const chartContainer = ref(null)
+let myChart = null
+
+// 图表配置
+const option = {
   tooltip: {
-    trigger: 'item',
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    // 边框颜色
+    borderColor: 'transparent',
+    // 边框圆角
+    borderRadius: 10,
+    // 内边距
+    padding: 10,
+    // 文字样式
+    textStyle: {
+      color: '#000'
+    },
+    trigger: 'item'
   },
   legend: {
     left: 'center',
@@ -25,7 +36,7 @@
       '土木学院',
       '物理与信息工程学院',
       '电气工程及其自动化学院',
-      '外国语学院' 
+      '外国语学院'
     ]
   },
   toolbox: {
@@ -39,13 +50,13 @@
   },
   series: [
     {
-      name: 'Area Mode',
+      name: '学院人数统计',
       type: 'pie',
       radius: ['10%', '70%'],
       roseType: 'area',
       itemStyle: {
         borderRadius: 8
-      },      
+      },
       label: {
         show: false // 这里设置不显示标签
       },
@@ -64,18 +75,16 @@
       ]
     }
   ]
-};
+}
 
+window.addEventListener('resize', function () {
+  myChart.resize()
+})
 
-  window.addEventListener('resize', function () {
-      myChart.resize();
-  });
-  
-  onMounted(() => {
-    if (chartContainer.value) {
-      myChart = echarts.init(chartContainer.value)
-      myChart.setOption(option)
-    }
-  })
-  </script>
-  
+onMounted(() => {
+  if (chartContainer.value) {
+    myChart = echarts.init(chartContainer.value)
+    myChart.setOption(option)
+  }
+})
+</script>

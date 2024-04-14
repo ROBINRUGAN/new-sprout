@@ -4,10 +4,13 @@ import { ElTable, ElTableColumn, ElIcon } from 'element-plus'
 import Pie from '@/components/Pie.vue'
 
 const tableData = ref([
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' },
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' },
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' },
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' }
+  { rank: '1', activityName: '新生注册', completionVolume: '999+人', dailyIncrease: '75%' },
+  { rank: '2', activityName: '寻找宿舍', completionVolume: '999+人', dailyIncrease: '50%' },
+  { rank: '3', activityName: '未雨绸缪', completionVolume: '999+人', dailyIncrease: '45%' },
+  { rank: '4', activityName: '探索巍巍学府', completionVolume: '837人', dailyIncrease: '55%' },
+  { rank: '5', activityName: '了解校史', completionVolume: '756人', dailyIncrease: '35%' },
+  { rank: '6', activityName: '校规检测', completionVolume: '542人', dailyIncrease: '25%' },
+  { rank: '7', activityName: '每日锻炼', completionVolume: '377人', dailyIncrease: '25%' },
 ])
 </script>
 <template>
@@ -15,16 +18,15 @@ const tableData = ref([
     <el-col :span="12"
       >
       <div class="hot">
-        <!-- <Locations/> -->
           <h1>热门活动</h1>
           <br />
           <el-table
             :data="tableData"
-            style="width: 100%"
+            style="width: 100%; height: 270px;"
             :header-cell-style="{ backgroundColor: '#f5f5f5', color: '#000' }"
           >
-            <el-table-column prop="rank" label="排名" width="60"></el-table-column>
-            <el-table-column prop="activityName" label="活动名称"></el-table-column>
+            <el-table-column prop="rank" label="排名" width="60px"></el-table-column>
+            <el-table-column prop="activityName" label="活动名称" ></el-table-column>
             <el-table-column prop="completionVolume" label="完成量"></el-table-column>
             <el-table-column label="日涨幅">
               <template #default="scope">

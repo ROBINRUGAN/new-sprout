@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Stats from '@/components/Stats.vue'
 import InfoItem from '@/components/InfoItem.vue'
+import RegisterPie from '@/components/RegisterPie.vue'
 import { ref } from 'vue'
 import { ElTable, ElTableColumn, ElIcon } from 'element-plus'
 import { useToolSelectStore } from '@/stores/toolSelectStore'
@@ -8,6 +9,12 @@ import { computed } from 'vue'
 
 const toolSelect = useToolSelectStore()
 
+const scrollToBottom = () => {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth'
+  })
+}
 // 定义一个方法来检查按钮是否应该被高亮
 function isFocused(index: number) {
   return toolSelect.focused === index
@@ -16,14 +23,8 @@ function isFocused(index: number) {
 // 定义一个方法来设置当前焦点
 function setFocus(index: number) {
   toolSelect.focused = index
+  if (index !== 4) scrollToBottom()
 }
-
-const tableData = ref([
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' },
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' },
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' },
-  { rank: '1', activityName: '早安福大', completionVolume: '346.3W+', dailyIncrease: '35%' }
-])
 </script>
 
 <template>
@@ -53,7 +54,7 @@ const tableData = ref([
               margin-bottom: 10px;
             "
           >
-            <h1>用户数据</h1>
+            <h1>日活数据</h1>
             <p style="font-size: 12px">(近七日)</p>
           </div>
 
@@ -65,7 +66,7 @@ const tableData = ref([
       <el-row>
         <el-col :span="24"
           ><div class="tool">
-            <h1>管理</h1>
+            <h1>统计管理</h1>
             <el-row class="iconBtns">
               <el-col :span="8" class="toolWrapper">
                 <router-link to="/home/dashboard/main">
@@ -78,7 +79,7 @@ const tableData = ref([
                   </button>
                 </router-link>
 
-                <p>活动管理</p>
+                <p>主要信息</p>
               </el-col>
               <el-col :span="8" class="toolWrapper">
                 <router-link to="/home/dashboard/find">
@@ -90,39 +91,46 @@ const tableData = ref([
                     <el-icon><Histogram /></el-icon>
                   </button>
                 </router-link>
-                <p>用户统计</p>
+                <p>查询用户</p>
               </el-col>
               <el-col :span="8" class="toolWrapper">
-                <button
-                  class="iconWrapper"
-                  @click="setFocus(3)"
-                  :class="{ 'is-focused': isFocused(3) }"
-                >
-                  <el-icon><DocumentCopy /></el-icon>
-                </button>
-                <p>高级管理</p>
+                <router-link to="/home/dashboard/where">
+                  <button
+                    class="iconWrapper"
+                    @click="setFocus(3)"
+                    :class="{ 'is-focused': isFocused(3) }"
+                  >
+                    <el-icon><DocumentCopy /></el-icon>
+                  </button>
+                </router-link>
+
+                <p>新生统计</p>
               </el-col>
             </el-row>
             <el-row class="iconBtns">
               <el-col :span="8" class="toolWrapper">
-                <button
-                  class="iconWrapper"
-                  @click="setFocus(4)"
-                  :class="{ 'is-focused': isFocused(4) }"
-                >
-                  <el-icon><Guide /></el-icon>
-                </button>
+                <router-link to="/home/pastAd">
+                  <button
+                    class="iconWrapper"
+                    @click="setFocus(4)"
+                    :class="{ 'is-focused': isFocused(4) }"
+                  >
+                    <el-icon><Guide /></el-icon>
+                  </button>
+                </router-link>
                 <p>线上推广</p>
               </el-col>
               <el-col :span="8" class="toolWrapper">
-                <button
-                  class="iconWrapper"
-                  @click="setFocus(5)"
-                  :class="{ 'is-focused': isFocused(5) }"
-                >
-                  <el-icon><DataLine /></el-icon>
-                </button>
-                <p>广告投放</p>
+                <router-link to="/home/dashboard/ad">
+                  <button
+                    class="iconWrapper"
+                    @click="setFocus(5)"
+                    :class="{ 'is-focused': isFocused(5) }"
+                  >
+                    <el-icon><DataLine /></el-icon>
+                  </button>
+                </router-link>
+                <p>广告统计</p>
               </el-col>
             </el-row>
           </div></el-col
@@ -131,12 +139,12 @@ const tableData = ref([
       <el-row>
         <el-col :span="24"
           ><div class="info">
-            <InfoItem type="activity"> 早安福大开始啦 </InfoItem>
-            <InfoItem type="msg"> 新增内容尚未通过审核，详... </InfoItem>
-            <InfoItem type="info"> 新增内容尚未通过审核，详... </InfoItem>
-            <InfoItem type="msg"> 新增内容尚未通过审核，详... </InfoItem>
-            <InfoItem type="info"> 新增内容尚未通过审核，详... </InfoItem>
-            <InfoItem type="msg"> 新增内容尚未通过审核，详... </InfoItem>
+            <InfoItem type="info"> 欢迎每一位新苗er～ </InfoItem>
+            <InfoItem type="activity"> 活动“每日锻炼”开始啦 </InfoItem>
+            <InfoItem type="activity"> 活动“校规检测”开始啦 </InfoItem>
+            <InfoItem type="activity"> 活动“了解校史”开始啦 </InfoItem>
+            <InfoItem type="msg"> 你有新的审核：寻找宿舍 </InfoItem>
+            <InfoItem type="info"> 快去发布广告吧～ </InfoItem>
           </div></el-col
         >
       </el-row>
@@ -148,8 +156,9 @@ const tableData = ref([
     </el-col>
     <el-col :span="6"
       ><div class="image">
-        <img src="../assets/home/image.png" alt="" /></div
-    ></el-col>
+        <RegisterPie />
+      </div>
+    </el-col>
   </el-row>
 </template>
 

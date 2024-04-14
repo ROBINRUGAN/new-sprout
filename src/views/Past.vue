@@ -177,7 +177,7 @@ const getDetailInfo = (id: number) => {
         <div class="card-content">
           <div class="card-id">{{ '活动id: ' + item.id }}</div>
           <div class="card-title">{{ item.taskName }}</div>
-          <div class="card-description">{{ item.taskDescription }}</div>
+          <div class="card-description">{{ item.taskDescription.split('\n')[0] }}</div>
         </div>
       </div>
     </div>
@@ -193,7 +193,7 @@ const getDetailInfo = (id: number) => {
         <div class="card-content">
           <div class="card-id">{{ '活动id: ' + item.id }}</div>
           <div class="card-title">{{ item.taskName }}</div>
-          <div class="card-description">{{ item.taskDescription }}</div>
+          <div class="card-description">{{ item.taskDescription.split('\n')[0] }}</div>
         </div>
       </div>
     </div>
